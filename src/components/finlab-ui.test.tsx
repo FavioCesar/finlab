@@ -43,4 +43,14 @@ describe('interfaz de Matemáticas Financieras', () => {
     expect(screen.getByText('Aún no es correcto.')).toBeTruthy()
     expect(screen.getByText('Procedimiento completo')).toBeTruthy()
   })
+
+  it('abre las herramientas funcionales de Proyectos y Estados', () => {
+    const { unmount } = render(<ModulePage module={modules[1]} />)
+    fireEvent.click(screen.getByRole('button', { name: /analizar/i }))
+    expect(screen.getByText('Analizar proyecto')).toBeTruthy()
+    unmount()
+    render(<ModulePage module={modules[2]} />)
+    fireEvent.click(screen.getByRole('button', { name: /analizar/i }))
+    expect(screen.getByText('Cargar ejemplo')).toBeTruthy()
+  })
 })
