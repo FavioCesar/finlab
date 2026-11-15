@@ -53,4 +53,13 @@ describe('interfaz de Matemáticas Financieras', () => {
     fireEvent.click(screen.getByRole('button', { name: /analizar/i }))
     expect(screen.getByText('Cargar ejemplo')).toBeTruthy()
   })
+
+  it('abre Estadística y calcula el análisis descriptivo', () => {
+    render(<ModulePage module={modules[3]} />)
+    expect(screen.getAllByText('1. Fundamentos de estadística').length).toBeGreaterThan(0)
+    fireEvent.click(screen.getByRole('button', { name: /analizar/i }))
+    fireEvent.click(screen.getByRole('button', { name: 'Analizar datos' }))
+    expect(screen.getByText('Observaciones')).toBeTruthy()
+    expect(screen.getByText('Asimetría Fisher')).toBeTruthy()
+  })
 })
