@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { CompoundInterestCalculator } from './CompoundInterestCalculator'
 import { CompoundInterestPractice } from './CompoundInterestPractice'
+import { DynamicProjectsPractice } from './DynamicProjectsPractice'
 import { ModulePage } from './ModulePage'
 import { modules } from '../data/modules'
 
@@ -61,5 +62,15 @@ describe('interfaz de Matemáticas Financieras', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Analizar datos' }))
     expect(screen.getByText('Observaciones')).toBeTruthy()
     expect(screen.getByText('Asimetría Fisher')).toBeTruthy()
+  })
+
+  it('cambia el indicador y genera otro ejercicio de proyectos', () => {
+    render(<DynamicProjectsPractice />)
+    const before = screen.getByText(/Proyecto ficticio/).textContent
+    fireEvent.click(screen.getByRole('button', { name: 'Siguiente ejercicio' }))
+    expect(screen.getByText(/Ejercicio 2/)).toBeTruthy()
+    expect(screen.getByText(/Proyecto ficticio/).textContent).not.toBe(before)
+    fireEvent.click(screen.getByRole('button', { name: 'TIRM' }))
+    expect(screen.getByText(/Ejercicio 3.*TIRM/)).toBeTruthy()
   })
 })
